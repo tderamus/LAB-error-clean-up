@@ -1,5 +1,5 @@
 {
-  "name": "webpack-5.0-template",
+  "name": "sorting-hat",
   "version": "1.0.0",
   "description": "",
   "main": "public/main.js",
@@ -9,7 +9,7 @@
     "build": "webpack --mode production"
   },
   "keywords": [],
-  "author": "",
+  "author": "toren deramus",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^6.2.0",
