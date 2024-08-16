@@ -1,13 +1,11 @@
 import '../styles/main.scss'; // You have to import your styles for them to work. Comment in this line
-import {houses} from '../utils/sample_data/house_data';
-
-const renderToDOM = (divId, content) => {
-  const selectedDiv = document.querySelector(divId);
-  selectedDiv.innerHTML = content;
-};
-
-const students = [];
-const voldysArmy = []; // starts as an empty array
+// eslint-disable-next-line import/named
+import { students, voldysArmy } from '../utils/sample_data/house_data';
+import renderToDOM from '../components/renderToDom';
+import { startSortingBtn, studentAreas } from '../utils/domFuncts';
+import studentsOnDom from '../components/studentsOnDom';
+// import createId from '../components/createId';
+import sortStudent from '../components/sortStudent';
 
 // ********** HTML Components  ********** //
 // the basic HMTL structure of app
@@ -35,47 +33,6 @@ const header = () => {
   renderToDOM('#header-container', domString);
 };
 
-const startSortingBtn = () => {
-  const domString = '<button type="button" class="btn btn-info" id="start-sorting">Start the Sorting Ceremony!</button>';
-
-  renderToDOM('#form-container', domString);
-};
-
-const studentAreas = () => {
-  const domString = `<div id="students">No Students</div>
-  <div id="voldy">No Death Eaters</div>`;
-
-  renderToDOM('#student-container', domString);
-};
-
-const studentsOnDom = (divId, array, house = 'Hogwarts') => {
-  let domString = '';
-  if (!array.length) {
-    domString += `NO ${house.toUpperCase()} STUDENTS`;
-  }
-
-  array.forEach((student) => {
-    domString += `
-    <div class="card bg-dark text-white">
-      <img src="${
-  divId === '#voldy'
-    ? 'https://carboncostume.com/wordpress/wp-content/uploads/2019/10/deatheater-harrypotter.jpg' : student.crest}" 
-          class="card-img" alt="${student.house} crest">
-      <div class="card-img-overlay">
-        <h5 class="card-title">${student.name}</h5>
-        ${
-  divId === '#voldy'
-    ? '<p class="card-text">Death Eater</p>'
-    : ` <p class="card-text">${student.house}</p>
-          <button type="button" id="expel--${student.id}" class="btn btn-danger btn-sm">Expel</button>`
-}
-      </div>
-    </div>
-    `;
-  });
-  renderToDOM(divId, domString);
-};
-
 const filterBtnRow = () => {
   const domString = `<div class="btn-group" role="group" aria-label="Basic example">
       <button type="button" id="filter--hufflepuff" class="btn btn-warning btn-sm">Hufflepuff</button>
@@ -90,35 +47,6 @@ const filterBtnRow = () => {
 
 // ********** LOGIC  ********** //
 // sorts student to a house and then place them in the students array
-
-// Create a new ID for the students
-const createId = (array) => {
-  if (array.length) {
-    const idArray = array.map((el) => el.id);
-    return Math.max(...idArray) + 1;
-  }
-  return 0;
-};
-
-const sortStudent = (e) => {
-  e.preventDefault();
-  const sortingHat = houses[Math.floor(Math.random() * houses.length)];
-
-  if (e.target.id === 'sorting') {
-    const student = document.querySelector('#student-name');
-
-    // create the new student object
-    students.push({
-      id: createId(students),
-      name: student.value,
-      house: sortingHat.house,
-      crest: sortingHat.crest
-    });
-
-    student.value = ''; // reset value of input
-    studentsOnDom('#students', students);
-  }
-};
 
 // Add events for form after the form is on the DOM
 const form = () => {

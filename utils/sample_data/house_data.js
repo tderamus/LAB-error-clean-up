@@ -21,4 +21,7 @@ const houses = [
   }
 ];
 
-export default { houses };
+const students = [];
+const voldysArmy = []; // starts as an empty array
+
+export { houses, students, voldysArmy };
